@@ -46,12 +46,18 @@ def create_book(request):
     new_book_serializer = BookSerializer(data=request.data)
     if new_book_serializer.is_valid():
         new_book_serializer.save()
-        return Response(new_book_serializer.data, status=status.HTTP_201_CREATED)
+        books = Book.objects.all()
+        serializer = BookSerializer(books, many=True)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    else:
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        # return Response(new_book_serializer.data, status=status.HTTP_201_CREATED)
 
 
-@api_view(['GET', 'PUT', 'DELETE'])
+@api_view(['GET', 'PUT'])
+@permission_classes([IsAuthenticated])
 def single_book(request, id):
-
     try:
         book = Book.objects.get(pk=id)
     except Book.DoesNotExist:
@@ -69,8 +75,16 @@ def single_book(request, id):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    elif request.method == 'DELETE':
-        book.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
 
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def delete_book(request):
+    try:
+        book = Book.objects.get(pk=request.data['id'])
+    except Book.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
 
+    book.delete()
+    books = Book.objects.all()
+    serializer = BookSerializer(books, many=True)
+    return Response(serializer.data)

@@ -1,11 +1,15 @@
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart, booksSelector, dogetbooksAsync } from "./main_shopSlice";
+import { selectToken } from "../authentication/authenticationSlice";
+import { addToCart, booksSelector, dogetbooksAsync, dodeletebookAsync } from "./main_shopSlice";
 
 
 
 const MainShop = () => {
   const dispatch = useDispatch();
   const booksAr = useSelector(booksSelector);
+
+  const token = useSelector(selectToken);
+
   return (
     <div>
       <button onClick={() => dispatch(dogetbooksAsync())}>get Data</button>
@@ -13,7 +17,7 @@ const MainShop = () => {
       <div className="main-shop">
         {booksAr.map((item) => (
             <div key={item.id} className="book-card">
-              <img src="./logo192.png" alt="..." />
+              <img src={item.get_thumbnail} alt="no img" />
               <div>
                 <h5>{item.name}</h5>
                 <p>
@@ -27,7 +31,13 @@ const MainShop = () => {
                 <button onClick={() => dispatch(addToCart(item))}>
                   add to cart
                 </button>
-              
+              { token ? (<><button >
+                  edit book
+                </button>
+                <button onClick={() => dispatch(dodeletebookAsync({'item': item, 'token': token}))}>
+                remove from shop
+              </button>
+              </>) : <></>}
             </div>
         ))}
       </div>

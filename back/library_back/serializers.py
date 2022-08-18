@@ -9,7 +9,7 @@ from rest_framework.validators import UniqueValidator
 class BookSerializer(serializers.ModelSerializer):
     class Meta:
         model = Book
-        fields = '__all__'
+        fields = ('id', 'author', 'category', 'name', 'price', 'year_published', 'get_thumbnail')
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):

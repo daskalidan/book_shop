@@ -13,7 +13,7 @@ const Register = () => {
 
   return (
     <div className='myLogin'>
-      register: {' '}
+      <h2>register</h2>
       <input type='text' value={username} placeholder='username' onChange={(e) => setusername(e.target.value)}></input>{' '}
       <input type='text' value={email} placeholder='email' onChange={(e) => setemail(e.target.value)}></input>{' '}
       <input type='password' value={password} placeholder='password' onChange={(e) => setpassword(e.target.value)}></input>{' '}

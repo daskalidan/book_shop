@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { add_book, get_all_books } from './main_shopAPI';
+import { add_book, delete_book, get_all_books } from './main_shopAPI';
 import { toast } from "react-toastify";
 
 
@@ -24,6 +24,14 @@ export const doaddbookAsync = createAsyncThunk(
     'main_shop/addbook',
     async (action) => {
         const response = await add_book(action);
+        return response.data;
+    }
+);
+
+export const dodeletebookAsync = createAsyncThunk(
+    'main_shop/deletebook',
+    async (action) => {
+        const response = await delete_book(action);
         return response.data;
     }
 );
@@ -92,8 +100,18 @@ export const main_shopSlice = createSlice({
                     state.books = action.payload
                 }
             })
-            .addCase(doaddbookAsync.fulfilled, (action) => {
+            .addCase(doaddbookAsync.fulfilled, (state, action) => {
                 console.log(action)
+                if (action.payload) {
+                    state.books = action.payload
+                }
+            })
+
+            .addCase(dodeletebookAsync.fulfilled, (state, action) => {
+                console.log(action)
+                if (action.payload) {
+                    state.books = action.payload
+                }
             })
     },
 });

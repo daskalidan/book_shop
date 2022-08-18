@@ -12,14 +12,25 @@ export function get_all_books() {
 
 export function add_book(action) {
     return new Promise((resolve) =>
-        axios.post(`${URL}createbook/`, 
-            { 
-            "name": action.bookname,
-            "author": action.author,
-            "year_published": action.year_published
+        axios.post(`${URL}createbook/`,
+            {
+                "name": action.bookname,
+                "author": action.author,
+                "year_published": action.year_published
             },
-            {headers: {'Authorization': `Bearer ${action.token}`}},
-            
-        ).then((res) => resolve(res.data))
+            { headers: { 'Authorization': `Bearer ${action.token}` } },
+
+        ).then((res) => resolve({ data: res.data }))
+    );
+}
+
+export function delete_book(action) {
+    return new Promise((resolve) =>
+        axios.delete(`${URL}deletebook/`,
+            {
+                headers: { 'Authorization': `Bearer ${action.token}` },
+                data: action.item
+            }
+        ).then((res) => resolve({ data: res.data }))
     );
 }

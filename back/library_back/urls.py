@@ -9,6 +9,7 @@ urlpatterns = [
     path('', views.home),
     path('allbooks/', views.all_books),
     path('createbook/', views.create_book),
+    path('deletebook/', views.delete_book),
     path('singlebook/<int:id>', views.single_book),
    #login
     path('token/', views.MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
