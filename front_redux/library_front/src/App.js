@@ -19,7 +19,7 @@ function App() {
           <Leftside />
           <Routes>
             <Route path='/' element={<Rightside></Rightside>}>
-              <Route path='/shop' element={<MainShop />}></Route>
+              <Route path='/' element={<MainShop />}></Route>
               <Route path='/cart' element={<Cart />}></Route>
               <Route path='/register' element={<Register></Register>} />
             </Route>

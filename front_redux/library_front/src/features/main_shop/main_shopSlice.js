@@ -8,7 +8,8 @@ const initialState = {
     books: [],
     cart: localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : [],
     cartItemsCount: 0,
-    cartTotalPrice: 0
+    cartTotalPrice: 0,
+    category: 'all'
 };
 // async (1)
 // simple async method (component can call it...)
@@ -87,6 +88,9 @@ export const main_shopSlice = createSlice({
             )
             state.cartItemsCount = totalsCalc.totalitems
             state.cartTotalPrice = totalsCalc.totalprice
+        },
+        chooseCategory: (state, action) => {
+            state.category = action.payload
         }
 
     },
@@ -117,10 +121,11 @@ export const main_shopSlice = createSlice({
 });
 
 // export sync method
-export const { addToCart, removeFromCart, cartCalc } = main_shopSlice.actions;
+export const { addToCart, removeFromCart, cartCalc, chooseCategory } = main_shopSlice.actions;
 
 // export any part of the state
 export const booksSelector = (state) => state.main_shop.books;
+export const categorySelector = (state) => state.main_shop.category;
 export const cartSelector = (state) => state.main_shop.cart;
 export const cartItemsCountSelector = (state) => state.main_shop.cartItemsCount;
 export const cartTotalPriceSelector = (state) => state.main_shop.cartTotalPrice;

@@ -17,7 +17,7 @@ const Header = () => {
         <div className='header'>
 
             <div>
-                <Link to="/shop">
+                <Link to="/">
                     <img alt='icon' src="/icons8-literature-ios-filled-96.png" />
                 </Link>
                 <span>

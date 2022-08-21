@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectToken } from '../authentication/authenticationSlice'
-import { doaddbookAsync } from '../main_shop/main_shopSlice'
+import { categorySelector, chooseCategory, doaddbookAsync } from '../main_shop/main_shopSlice'
+
 
 
 const Leftside = () => {
@@ -12,6 +13,8 @@ const Leftside = () => {
   const [year_published, setyear_published] = useState('')
 
   const token = useSelector(selectToken);
+  const active_cat = useSelector(categorySelector);
+
 
   return (
     <div className="left">
@@ -23,6 +26,9 @@ const Leftside = () => {
         <button onClick={()=> dispatch(doaddbookAsync({'bookname': bookname, 'author': author, 'year_published': year_published, 'token':token}))}>add book</button>
         </div>): (<p className='add-book'>log in to add books</p>)}
         <h3>categories</h3>
+        <h4>active cat</h4>
+        <h5>{active_cat}</h5>
+        <button onClick={() => dispatch(chooseCategory('all'))}>all</button>
     </div>
   )
 }
